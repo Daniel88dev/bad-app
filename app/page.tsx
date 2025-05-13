@@ -63,6 +63,12 @@ export default function Home() {
       borderRadius: "8px",
       padding: "15px",
       backgroundColor: "#fff",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "start",
+      justifyContent: "space-between",
+      height: "650px",
+      gap: "20px",
     },
     productImage: {
       width: "100%",
@@ -73,6 +79,9 @@ export default function Home() {
       padding: "10px",
       marginBottom: "20px",
       fontSize: "16px",
+      color: "black",
+      border: "1px solid #ddd",
+      borderRadius: "4px",
     },
   };
 
@@ -99,26 +108,49 @@ export default function Home() {
               alt={`image of product ${product.name}`}
               priority={true}
             />
-            <h2>{product.name}</h2>
-            <p>
-              Added:{" "}
-              {moment().subtract(product.id, "days").format("MMMM Do YYYY")}
-            </p>
-            <p>{product.description}</p>
-            <p>Price: ${product.price}</p>
-            <button
-              onClick={() => alert("Product added to cart!")}
-              style={{
-                backgroundColor: "#4CAF50",
-                color: "white",
-                padding: "10px 20px",
-                border: "none",
-                borderRadius: "4px",
-                cursor: "pointer",
-              }}
-            >
-              Add to Cart
-            </button>
+            <div style={{ gap: "10px" }}>
+              <h2
+                style={{
+                  color: "#333",
+                  fontWeight: "bold",
+                }}
+              >
+                {product.name}
+              </h2>
+              <p style={{ color: "#777" }}>
+                Added:{" "}
+                {moment().subtract(product.id, "days").format("MMMM Do YYYY")}
+              </p>
+              <p
+                style={{
+                  color: "#777",
+                }}
+              >
+                {product.description}
+              </p>
+              <p
+                style={{
+                  color: "#777",
+                  textDecoration: "underline",
+                  fontWeight: "bolder",
+                }}
+              >
+                Price: ${product.price}
+              </p>
+              <button
+                onClick={() => alert("Product added to cart!")}
+                style={{
+                  backgroundColor: "#4CAF50",
+                  color: "white",
+                  padding: "10px 20px",
+                  border: "none",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                }}
+              >
+                Add to Cart
+              </button>
+            </div>
           </div>
         ))}
       </div>
