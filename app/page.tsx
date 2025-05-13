@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import _ from "lodash";
-import moment from "moment";
 import Image from "next/image";
 
 interface Product {
@@ -44,11 +43,15 @@ export default function Home() {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
   const [searchTerm, setSearchTerm] = useState("");
 
-  useEffect(() => {
-    const filtered = _.filter(products, (product: Product) => {
-      return product.name.toLowerCase().includes(searchTerm.toLowerCase());
-    });
+  const handleSearch = _.debounce((term) => {
+    const filtered = products.filter((product) =>
+      product.name.toLowerCase().includes(term.toLowerCase())
+    );
     setFilteredProducts(filtered);
+  }, 200);
+
+  useEffect(() => {
+    handleSearch(searchTerm);
   }, [searchTerm]);
 
   const styles = {
@@ -64,7 +67,7 @@ export default function Home() {
       padding: "15px",
       backgroundColor: "#fff",
       display: "flex",
-      flexDirection: "column",
+      flexDirection: "column" as const,
       alignItems: "start",
       justifyContent: "space-between",
       height: "650px",
@@ -119,7 +122,13 @@ export default function Home() {
               </h2>
               <p style={{ color: "#777" }}>
                 Added:{" "}
-                {moment().subtract(product.id, "days").format("MMMM Do YYYY")}
+                {/*Replaced moment which is a large library, with Intl.DateTimeFormat,
+                which is a smaller library, and more performant*/}
+                {new Intl.DateTimeFormat("en-US", {
+                  month: "long",
+                  day: "numeric",
+                  year: "numeric",
+                }).format(new Date(new Date()))}
               </p>
               <p
                 style={{
